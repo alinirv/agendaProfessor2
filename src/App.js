@@ -1,90 +1,78 @@
 import React, { useState } from 'react';
-import Header from './components/Header';
 import Footer from './components/Footer';
+import Header from './components/Header';
 import './App.css';
 
-function App() {
+export default function App() {
   return (
-    <div id='principal'>
-      <Header />
+    <div className='App-header' >
+      <Header/>
       <main>
-        <p>Gerencie seus contatos</p>
-        {ListaDeContatos()}
+        <p> Componente do semestre 2024/2</p>
+        {ListaDeDisciplinas()}
+
+
       </main>
       <Footer />
     </div>
   );
 }
 
-function ListaDeContatos() {
-  
-  //lista de contatos 
-  const [lista, setLista] = useState([
-    { nome: 'João Silva', email: 'joao@gmail.com', telefone: '123-456-7890' },
-    { nome: 'Maria Souza', email: 'maria@gmail.com', telefone: '098-765-4321' },
-    { nome: 'Carlos Pereira', email: 'carlos@gmail.com', telefone: '555-555-5555' }
-  ]);
+function ListaDeDisciplinas() {
 
-  const [novoContato, setNovoContato] = useState({ nome: '', email: '', telefone: '' });
-  
-  /// Função para lidar com a mudança de valor dos inputs
+  // Estado para armazenar na lista de disciplinas e a nova disciplina
+  const [lista, setlista] = useState(['PW4', 'TC2', 'PDM']);
+  const [novaDisciplina, setnovaDisciplina] = useState('');
+
+  /// Função para lidar com a mudança de valor do input
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    setNovoContato({ ...novoContato, [name]: value });
+    setnovaDisciplina(event.target.value);
   };
 
-  // Função para adicionar um novo contato à lista
-  const adicionarContato = () => {
-    if (novoContato.nome.trim() !== '' && novoContato.email.trim() !== '' && novoContato.telefone.trim() !== '') {
-      setLista([...lista, novoContato]);
-      setNovoContato({ nome: '', email: '', telefone: '' });
+  // Função para adicionar uma nova disciplina à lista
+  const adicionarDisciplina = () => {
+    if (novaDisciplina.trim() !== '') {
+      setlista([...lista, novaDisciplina]);
+      setnovaDisciplina('');
     }
   };
 
-  // Função para capturar a tecla Enter e adicionar o contato à lista
+  // Função para capturar a tecla Enter e adicionar a lista de disciplinas
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      adicionarContato();  // Chama a função de adicionar contato ao pressionar Enter
+      adicionarDisciplina();  // Chama a função de adicionar tarefa ao pressionar Enter
     }
   };
 
   return (
     <div>
-      <h1>Lista de contatos</h1>
+      <h1>Lista de disciplinas</h1>
       <input
         type="text"
-        name="nome"
-        value={novoContato.nome}
+        value={novaDisciplina}
         onChange={handleChange}
         onKeyPress={handleKeyPress}  // Adiciona a função de capturar Enter
-        placeholder="Nome"
-      /><br/>
-      <input
-        type="email"
-        name="email"
-        value={novoContato.email}
-        onChange={handleChange}
-        onKeyPress={handleKeyPress}  
-        placeholder="Email"
-      /><br/>
-      <input
-        type="tel"
-        name="telefone"
-        value={novoContato.telefone}
-        onChange={handleChange}
-        onKeyPress={handleKeyPress} 
-        placeholder="Telefone"
-      /><br/>
-      <button onClick={adicionarContato}>Adicionar</button>
+        placeholder="Nova disciplina"
+      />
+      <button onClick={adicionarDisciplina}>Adicionar</button>
       <ul>
-        {lista.map((contato, index) => (
-          <li key={index}>
-           Nome:  {contato.nome} - Email:  {contato.email} - Tel: {contato.telefone}
-          </li>  // Renderiza cada contato como um item de lista
+        {lista.map((tarefa, index) => (
+          <li key={index}>{tarefa}</li>  // Renderiza cada tarefa como um item de lista
         ))}
-      </ul>     
+      </ul>
+
+      <div>
+        <p>Selecione o turno:</p>
+        <label>
+          <input type="radio" name="options" value="M" checked /> Matutino
+        </label>
+        <label>
+          <input type="radio" name="options" value="M" checked /> Vespertino
+        </label>
+        <label>
+          <input type="radio" name="options" value="M" checked /> Noturno
+        </label>
+      </div>
     </div>
   );
 }
-
-export default App;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import './App.css';
+import SalvarArquivo from './components/SalvarArquivo';
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
         <p> Componente do semestre 2024/2</p>
         {ListaDeDisciplinas()}
 
+        {SalvarArquivo()}
 
       </main>
       <Footer />
